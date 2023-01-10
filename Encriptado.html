@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Encriptador</title>
+	<link rel="stylesheet" href="reset.css">
+	<link rel="stylesheet" href="StyleE.css">
+</head>
+
+<body>
+	<header>
+		<p id="texto-nombre"><img id="imagen-logo" src="imagenes/Logo.png"> - Miguel Córdova Schaefer</p>
+	</header>
+
+	<main>
+		<ul>
+			<li id="zona-encriptado">
+				<textarea id="texto-encriptado" required placeholder="Ingrese texto a encriptar o desencriptar aquí" ></textarea>		
+				<p id="nota"><img id="imagen-alerta" src="https://api.iconify.design/bi/exclamation-circle-fill.svg" alt="Alerta">Sólo letras minúsculas y sin acentos</p>
+				<button id="boton-encriptar" class="botones" onclick="ejecutarEncriptar(); resetear()">Encriptar</button>
+				<button id="boton-desencriptar" class="botones" onclick="ejecutarDesencriptar(); resetear()">Desencriptar</button>
+			</li>
+			<li id="zona-resultado">
+				<textarea id="texto-resultado"></textarea>
+				<button class="botones" id="boton-copiar" onclick="copiar()">Copiar Texto</button>	
+				<div id="zona-buscador">
+					<img id="imagen-buscar" src="imagenes/Muñeco.png">
+					<p id="texto-resultado1">Ningún mensaje fue encontrado</p>
+					<p id="texto-resultado2">Ingresa el texto que deseas encriptar o desencriptar</p>
+				</div>
+			</li>	
+		</ul>
+	</main>
+
+	<footer>
+	</footer>
+</body>
+</html>
+
+<script>
+	
+	var texto = document.getElementById("texto-encriptado");
+	texto.focus();
+
+	function ejecutarEncriptar() {
+		var cadena = [];
+		for (var posicion=0; posicion<parseInt(texto.value.length); posicion++){
+			cadena.push(texto.value[posicion].toLowerCase());
+		}
+		
+		var indice = 0;
+		while (indice < parseInt(cadena.length)){
+			if(cadena[indice] == "a"){
+				cadena[indice] = "ai";
+			}
+			if(cadena[indice] == "e"){
+				cadena[indice] = "enter";
+			}
+			if(cadena[indice] == "i"){
+				cadena[indice] = "imes";
+			}
+			if(cadena[indice] == "o"){
+				cadena[indice] = "ober";
+			}
+			if(cadena[indice] == "u"){
+				cadena[indice] = "ufat";
+			}
+			indice++;
+			//La letra "a" es convertida para "ai"
+			//La letra "e" es convertida para "enter"
+			//La letra "i" es convertida para "imes"
+			//La letra "o" es convertida para "ober"
+			//La letra "u" es convertida para "ufat"
+		}
+		
+		document.getElementById("zona-buscador").style.display="none"
+		return document.getElementById("texto-resultado").innerHTML = cadena.join("");
+	}
+
+	function ejecutarDesencriptar() {
+		var cadena1 = [];
+		for (var posicion1=0; posicion1<parseInt(texto.value.length); posicion1++){
+			cadena1.push(texto.value[posicion1].toLowerCase());
+		}
+		
+		var indice1 = 0;
+		while (indice1 < parseInt(cadena1.length)){
+			if(cadena1[indice1] == "a" && cadena1[indice1+1] == "i"){
+				cadena1.splice(indice1+1,1);
+			}
+			if(cadena1[indice1] == "e" && cadena1[indice1+1] == "n" && cadena1[indice1+2] == "t" && cadena1[indice1+3] == "e" && cadena1[indice1+4] == "r"){
+				cadena1.splice(indice1+1,4);
+			}
+			if(cadena1[indice1] == "i" && cadena1[indice1+1] == "m" && cadena1[indice1+2] == "e" && cadena1[indice1+3] == "s"){
+				cadena1.splice(indice1+1,3);
+			}
+			if(cadena1[indice1] == "o" && cadena1[indice1+1] == "b" && cadena1[indice1+2] == "e" && cadena1[indice1+3] == "r"){
+				cadena1.splice(indice1+1,3);
+			}
+			if(cadena1[indice1] == "u" && cadena1[indice1+1] == "f" && cadena1[indice1+2] == "a" && cadena1[indice1+3] == "t"){
+				cadena1.splice(indice1+1,3);
+			}
+			indice1++;
+		}
+		
+		document.getElementById("zona-buscador").style.display="none"
+		return document.getElementById("texto-resultado").innerHTML = cadena1.join("");
+	}
+	
+	function resetear() {
+		return texto.value = "";
+	}
+
+	function copiar() {
+  		var copiarTexto = document.querySelector("#texto-resultado");
+  		copiarTexto.select();
+  		document.execCommand("copy");
+	}
+	
+</script>
+
+
+
